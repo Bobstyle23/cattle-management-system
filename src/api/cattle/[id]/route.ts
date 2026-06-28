@@ -37,3 +37,13 @@ export async function PUT(request: Request, { params }: CattleParam) {
 
   return NextResponse.json(cattle);
 }
+
+export async function DELETE(request: Request, { params }: CattleParam) {
+  await prisma.cattle.delete({
+    where: {
+      id: params.id,
+    },
+  });
+
+  return NextResponse.json({ message: `${params.id} cattle deleted` });
+}
