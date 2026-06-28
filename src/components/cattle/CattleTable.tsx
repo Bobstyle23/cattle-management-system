@@ -25,7 +25,7 @@ function calculateAge(date: string) {
     age--;
   }
 
-  return `${age} years`;
+  return `${age > 1 ? `${age} years` : `${age} year`}`;
 }
 
 export default function CattleTable({ cattle }: Props) {
