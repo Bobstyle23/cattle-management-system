@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { cattleSchema } from "@/lib/validation";
 
 interface CattleParam {
   params: { id: string };
@@ -21,6 +22,14 @@ export async function GET(request: Request, { params }: CattleParam) {
 
 export async function PUT(request: Request, { params }: CattleParam) {
   const body = await request.json();
+  const result = cattleSchema.safeParse(body);
+
+  if (!result.success) {
+    return NextResponse.json(
+      { errors: result.error.flatten() },
+      { status: 400 },
+    );
+  }
 
   const cattle = await prisma.cattle.update({
     where: {
