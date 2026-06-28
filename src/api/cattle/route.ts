@@ -38,10 +38,10 @@ export async function POST(request: Request) {
 
     return NextResponse.json(cattle, { status: 201 });
   } catch (error) {
+    console.error("Failed to create cattle:", error);
     return NextResponse.json(
       {
         message: "Failed to create cattle",
-        error,
       },
       { status: 500 },
     );
