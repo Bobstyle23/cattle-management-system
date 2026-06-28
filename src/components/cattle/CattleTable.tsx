@@ -7,15 +7,7 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-
-interface Cattle {
-  id: string;
-  tagNumber: string;
-  breed: string;
-  gender: string;
-  dateOfBirth: string;
-  status: string;
-}
+import { Cattle } from "@/entities/Cattle";
 
 interface Props {
   cattle: Cattle[];

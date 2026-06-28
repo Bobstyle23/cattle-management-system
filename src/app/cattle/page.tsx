@@ -1,9 +1,10 @@
 import CattleTable from "@/components/cattle/CattleTable";
 import SearchBar from "@/components/cattle/SearchBar";
 import FilterBar from "@/components/cattle/FilterBar";
+import { Cattle } from "@/entities/Cattle";
 
 export default function CattlePage() {
-  const cattle = [
+  const cattle: Cattle[] = [
     {
       id: "1",
       tagNumber: "COW-001",
