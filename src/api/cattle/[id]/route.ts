@@ -18,3 +18,22 @@ export async function GET(request: Request, { params }: CattleParam) {
 
   return NextResponse.json(cattle);
 }
+
+export async function PUT(request: Request, { params }: CattleParam) {
+  const body = await request.json();
+
+  const cattle = await prisma.cattle.update({
+    where: {
+      id: params.id,
+    },
+    data: {
+      tagNumber: body.tagNumber,
+      breed: body.breed,
+      gender: body.gender,
+      dateOfBirth: new Date(body.dateOfBirth),
+      status: body.status,
+    },
+  });
+
+  return NextResponse.json(cattle);
+}
