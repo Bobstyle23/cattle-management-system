@@ -9,6 +9,10 @@ import { useState } from "react";
 export default function CattlePage() {
   const [search, setSearch] = useState<string>("");
 
+  const [breed, setBreed] = useState("ALL");
+  const [gender, setGender] = useState("ALL");
+  const [status, setStatus] = useState("ALL");
+
   const cattle: Cattle[] = [
     {
       id: "1",
@@ -48,11 +52,24 @@ export default function CattlePage() {
   const filteredCattle = cattle.filter((c: Cattle) => {
     const keyword = search.toLowerCase();
 
-    return (
+    const matchesSearch =
       c.tagNumber.toLowerCase().includes(keyword) ||
-      c.breed.toLowerCase().includes(keyword)
-    );
+      c.breed.toLowerCase().includes(keyword);
+
+    const matchesBreed = breed == "ALL" || c.breed == breed;
+
+    const matchesGender = gender == "ALL" || c.gender == gender;
+
+    const matchesStatus = status == "ALL" || c.status == status;
+
+    return matchesSearch && matchesBreed && matchesGender && matchesStatus;
   });
+
+  const handleReset = () => {
+    setBreed("ALL");
+    setGender("ALL");
+    setStatus("ALL");
+  };
 
   return (
     <>
@@ -60,7 +77,15 @@ export default function CattlePage() {
 
       <SearchBar value={search} onSearch={setSearch} />
 
-      <FilterBar />
+      <FilterBar
+        breed={breed}
+        gender={gender}
+        status={status}
+        onBreedChange={setBreed}
+        onGenderChange={setGender}
+        onStatusChange={setStatus}
+        onReset={handleReset}
+      />
 
       <CattleTable cattle={filteredCattle} />
     </>
