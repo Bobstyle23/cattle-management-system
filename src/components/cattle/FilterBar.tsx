@@ -8,6 +8,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "../ui/button";
+import { CATTLE_BREEDS } from "@/entities/Breed";
 
 interface FilterBarProps {
   breed: string;
@@ -37,10 +38,12 @@ export default function FilterBar({
         </SelectTrigger>
 
         <SelectContent>
-          <SelectItem value="ALL">All Breeds</SelectItem>
-          <SelectItem value="Angus">Angus</SelectItem>
-          <SelectItem value="Holstein">Holstein</SelectItem>
-          <SelectItem value="Jersey">Jersey</SelectItem>
+          <SelectItem value="ALL">All</SelectItem>
+          {CATTLE_BREEDS.map((breed) => (
+            <SelectItem value={breed} key={breed}>
+              {breed}
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
 
