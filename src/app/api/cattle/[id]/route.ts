@@ -3,13 +3,14 @@ import { prisma } from "@/lib/prisma";
 import { cattleSchema } from "@/lib/validation";
 
 interface CattleParam {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
-export async function GET(request: Request, { params }: CattleParam) {
+export async function GET({ params }: CattleParam) {
+  const { id } = await params;
   const cattle = await prisma.cattle.findUnique({
     where: {
-      id: params.id,
+      id: id,
     },
   });
 
@@ -21,6 +22,8 @@ export async function GET(request: Request, { params }: CattleParam) {
 }
 
 export async function PUT(request: Request, { params }: CattleParam) {
+  const { id } = await params;
+
   const body = await request.json();
   const result = cattleSchema.safeParse(body);
 
@@ -33,7 +36,7 @@ export async function PUT(request: Request, { params }: CattleParam) {
 
   const cattle = await prisma.cattle.update({
     where: {
-      id: params.id,
+      id: id,
     },
     data: {
       tagNumber: body.tagNumber,
@@ -47,12 +50,13 @@ export async function PUT(request: Request, { params }: CattleParam) {
   return NextResponse.json(cattle);
 }
 
-export async function DELETE(request: Request, { params }: CattleParam) {
+export async function DELETE({ params }: CattleParam) {
+  const { id } = await params;
   await prisma.cattle.delete({
     where: {
-      id: params.id,
+      id: id,
     },
   });
 
-  return NextResponse.json({ message: `${params.id} cattle deleted` });
+  return NextResponse.json({ message: `${id} cattle deleted` });
 }
