@@ -10,6 +10,7 @@ export default function DashboardPage() {
   const { data: dashboard, isLoading } = useQuery({
     queryKey: ["dashboard"],
     queryFn: getDashboard,
+    staleTime: 0,
   });
 
   const router = useRouter();

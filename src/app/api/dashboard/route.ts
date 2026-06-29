@@ -24,7 +24,11 @@ export async function GET() {
     orderBy: {
       createdAt: "desc",
     },
-    take: 5,
+  });
+
+  const breeds = await prisma.cattle.groupBy({
+    by: ["breed"],
+    _count: true,
   });
 
   return NextResponse.json({
@@ -34,5 +38,6 @@ export async function GET() {
     sold,
     pregnant,
     recent,
+    breeds,
   });
 }
