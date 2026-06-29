@@ -5,6 +5,8 @@ import SearchBar from "@/components/cattle/SearchBar";
 import FilterBar from "@/components/cattle/FilterBar";
 import { Cattle } from "@/entities/Cattle";
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getCattle } from "@/services/cattle";
 
 export default function CattlePage() {
   const [search, setSearch] = useState<string>("");
@@ -13,41 +15,10 @@ export default function CattlePage() {
   const [gender, setGender] = useState("ALL");
   const [status, setStatus] = useState("ALL");
 
-  const cattle: Cattle[] = [
-    {
-      id: "1",
-      tagNumber: "COW-001",
-      breed: "Angus",
-      gender: "MALE",
-      dateOfBirth: "2022-01-10",
-      status: "HEALTHY",
-    },
-    {
-      id: "2",
-      tagNumber: "COW-002",
-      breed: "Holstein",
-      gender: "FEMALE",
-      dateOfBirth: "2021-05-18",
-      status: "PREGNANT",
-    },
-    {
-      id: "3",
-      tagNumber: "COW-003",
-      breed: "Hereford",
-      gender: "MALE",
-      dateOfBirth: "2023-05-02",
-      status: "SICK",
-    },
-
-    {
-      id: "4",
-      tagNumber: "COW-004",
-      breed: "Simmental",
-      gender: "MALE",
-      dateOfBirth: "2024-11-12",
-      status: "SOLD",
-    },
-  ];
+  const { data: cattle = [], isLoading } = useQuery({
+    queryKey: ["cattle"],
+    queryFn: getCattle,
+  });
 
   const filteredCattle = cattle.filter((c: Cattle) => {
     const keyword = search.toLowerCase();
@@ -70,6 +41,10 @@ export default function CattlePage() {
     setGender("ALL");
     setStatus("ALL");
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
