@@ -46,3 +46,5 @@ export const BREED_GROUPS = {
   ],
   Other: ["Crossbred", "Mixed", "Other"],
 };
+
+export const CATTLE_BREEDS = Object.values(BREED_GROUPS).flat();

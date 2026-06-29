@@ -46,7 +46,7 @@ export default function CattleForm({ defaultValues, onSubmit }: Props) {
 
     defaultValues: {
       tagNumber: "",
-      breed: "",
+      breed: "Holstein",
       gender: "MALE",
       status: "HEALTHY",
       dateOfBirth: "",
@@ -82,7 +82,7 @@ export default function CattleForm({ defaultValues, onSubmit }: Props) {
               <FieldLabel htmlFor="breed">Breed</FieldLabel>
               <Select value={field.value} onValueChange={field.onChange}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select a breed of the cattle" />
+                  <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   {Object.entries(BREED_GROUPS).map(([group, breeds]) => (
@@ -95,9 +95,7 @@ export default function CattleForm({ defaultValues, onSubmit }: Props) {
                       ))}
                     </SelectGroup>
                   ))}
-                  <FieldDescription>
-                    Select the breed of the cattle from the list
-                  </FieldDescription>
+                  <FieldError errors={[errors.breed]} />
                 </SelectContent>
               </Select>
             </Field>
