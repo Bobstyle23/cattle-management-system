@@ -38,3 +38,22 @@ export async function createCattle(data: CattleFormValues): Promise<Cattle> {
 
   return response.json();
 }
+
+export async function updateCattle(
+  id: string,
+  data: CattleFormValues,
+): Promise<Cattle> {
+  const response = await fetch(`/api/cattle/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to update cattle");
+  }
+
+  return response.json();
+}
