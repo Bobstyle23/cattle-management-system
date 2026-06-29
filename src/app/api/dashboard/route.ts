@@ -36,6 +36,27 @@ export async function GET() {
     count: item._count,
   }));
 
+  const status = await prisma.cattle.groupBy({
+    by: ["status"],
+    _count: {
+      status: true,
+    },
+  });
+
+  const STATUS_COLORS: Record<string, string> = {
+    HEALTHY: "#22c55e",
+    SICK: "#ef4444",
+    PREGNANT: "#f59e0b",
+    SOLD: "#6b7280",
+    DECEASED: "#000",
+  } as const;
+
+  const statusChart = status.map((item) => ({
+    status: item.status,
+    value: item._count.status,
+    fill: STATUS_COLORS[item.status],
+  }));
+
   return NextResponse.json({
     total,
     healthy,
@@ -45,5 +66,6 @@ export async function GET() {
     recent,
     breeds,
     breedChart,
+    statusChart,
   });
 }
