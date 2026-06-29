@@ -9,6 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Cattle } from "@/entities/Cattle";
 import StatusBadge from "./StatusBadge";
+import DeleteCattleDialog from "./DeleteCattleDialog";
 
 interface Props {
   cattle: Cattle[];
@@ -81,13 +82,10 @@ export default function CattleTable({ cattle, onDelete, onEdit }: Props) {
                   Edit
                 </Button>
 
-                <Button
-                  variant="destructive"
-                  size="sm"
-                  onClick={() => onDelete?.(cow.id)}
-                >
-                  Delete
-                </Button>
+                <DeleteCattleDialog
+                  tagNumber={cow.tagNumber}
+                  onConfirm={() => onDelete?.(cow.id)}
+                />
               </TableCell>
             </TableRow>
           ))}
