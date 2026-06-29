@@ -6,8 +6,9 @@ import FilterBar from "@/components/cattle/FilterBar";
 import { Cattle } from "@/entities/Cattle";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { deleteCattle, getCattle, updateCattle } from "@/services/cattle";
+import { deleteCattle, getCattle } from "@/services/cattle";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 export default function CattlePage() {
   const [search, setSearch] = useState<string>("");
@@ -66,16 +67,20 @@ export default function CattlePage() {
       <h2 className="text-2xl font-bold mb-6">Cattle List</h2>
 
       <SearchBar value={search} onSearch={setSearch} />
-
-      <FilterBar
-        breed={breed}
-        gender={gender}
-        status={status}
-        onBreedChange={setBreed}
-        onGenderChange={setGender}
-        onStatusChange={setStatus}
-        onReset={handleReset}
-      />
+      <div className="flex items-center justify-between">
+        <FilterBar
+          breed={breed}
+          gender={gender}
+          status={status}
+          onBreedChange={setBreed}
+          onGenderChange={setGender}
+          onStatusChange={setStatus}
+          onReset={handleReset}
+        />
+        <Button className="mb-6" onClick={() => router.push("/cattle/new")}>
+          Add new cattle
+        </Button>
+      </div>
 
       <CattleTable
         cattle={filteredCattle}
