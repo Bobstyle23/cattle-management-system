@@ -52,13 +52,34 @@ export async function PUT(request: Request, { params }: CattleParam) {
   return NextResponse.json(cattle);
 }
 
-export async function DELETE({ params }: CattleParam) {
-  const { id } = await params;
-  await prisma.cattle.delete({
-    where: {
-      id: id,
-    },
-  });
+export async function DELETE(
+  request: NextRequest,
+  context: { params: Promise<{ id: string }> },
+) {
+  try {
+    const { id } = await context.params;
 
-  return NextResponse.json({ message: `${id} cattle deleted` });
+    await prisma.cattle.delete({
+      where: {
+        id,
+      },
+    });
+
+    return NextResponse.json({
+      success: true,
+      message: "Deleted successfully",
+    });
+  } catch (error) {
+    console.error(error);
+
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Delete failed",
+      },
+      {
+        status: 500,
+      },
+    );
+  }
 }
