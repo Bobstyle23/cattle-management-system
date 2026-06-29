@@ -16,8 +16,6 @@ interface Props {
 }
 
 export default function RecentCattleTable({ cattle }: Props) {
-  console.log(cattle);
-
   return (
     <Card>
       <CardHeader>

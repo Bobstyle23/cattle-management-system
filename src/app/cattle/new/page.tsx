@@ -4,6 +4,7 @@ import CattleForm from "@/components/cattle/CattleForm";
 import { createCattle } from "@/services/cattle";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function AddCattlePage() {
   const queryClient = useQueryClient();
@@ -16,6 +17,10 @@ export default function AddCattlePage() {
         queryKey: ["cattle"],
       });
       router.push("/cattle");
+      toast.success("Cattle added");
+    },
+    onError: () => {
+      toast.error("Something went wrong");
     },
   });
 

@@ -5,6 +5,7 @@ import { CattleFormValues } from "@/entities/CattleFormValues";
 import { getCattleById, updateCattle } from "@/services/cattle";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function EditPage() {
   const { id } = useParams();
@@ -29,7 +30,11 @@ export default function EditPage() {
       queryClient.invalidateQueries({
         queryKey: ["cattle", id],
       });
+      toast.success("Cattle updated");
       router.push("/cattle");
+    },
+    onError: () => {
+      toast.error("Something went wrong");
     },
   });
 

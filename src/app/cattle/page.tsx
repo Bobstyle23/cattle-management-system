@@ -9,6 +9,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { deleteCattle, getCattle } from "@/services/cattle";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 export default function CattlePage() {
   const [search, setSearch] = useState<string>("");
@@ -31,6 +32,10 @@ export default function CattlePage() {
       queryClient.invalidateQueries({
         queryKey: ["cattle"],
       });
+      toast.success("Cattle deleted");
+    },
+    onError: () => {
+      toast.error("Something went wrong");
     },
   });
 
