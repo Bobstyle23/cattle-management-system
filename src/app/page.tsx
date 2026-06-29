@@ -2,33 +2,17 @@
 
 import { StatCard } from "@/components/dashboard/StatCard";
 import { Button } from "@/components/ui/button";
-import { getCattle } from "@/services/cattle";
+import { getDashboard } from "@/services/dashboard";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
 export default function DashboardPage() {
-  const { data: cattles = [], isLoading } = useQuery({
-    queryKey: ["cattle"],
-    queryFn: getCattle,
+  const { data: dashboard, isLoading } = useQuery({
+    queryKey: ["dashboard"],
+    queryFn: getDashboard,
   });
 
   const router = useRouter();
-
-  const healthyCattlesCount = cattles.filter(
-    (cattle) => cattle.status == "HEALTHY",
-  ).length;
-
-  const soldCattlesCount = cattles.filter(
-    (cattle) => cattle.status == "SOLD",
-  ).length;
-
-  const pregnantCattlesCount = cattles.filter(
-    (cattle) => cattle.status == "PREGNANT",
-  ).length;
-
-  const sickCattlesCount = cattles.filter(
-    (cattle) => cattle.status == "SICK",
-  ).length;
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -39,11 +23,11 @@ export default function DashboardPage() {
       <h2 className="text-2xl font-bold mb-6">Dashboard</h2>
 
       <div className="grid grid-cols-5 gap-4 mb-6">
-        <StatCard title="Total Cattle" value={cattles.length} />
-        <StatCard title="Healthy" value={healthyCattlesCount} />
-        <StatCard title="Sold" value={soldCattlesCount} />
-        <StatCard title="Pregnant" value={pregnantCattlesCount} />
-        <StatCard title="Sick" value={sickCattlesCount} />
+        <StatCard title="Total Cattle" value={dashboard.total} />
+        <StatCard title="Healthy" value={dashboard.healthy} />
+        <StatCard title="Sold" value={dashboard.sold} />
+        <StatCard title="Pregnant" value={dashboard.pregnant} />
+        <StatCard title="Sick" value={dashboard.sick} />
       </div>
 
       <div className="self-end ">
