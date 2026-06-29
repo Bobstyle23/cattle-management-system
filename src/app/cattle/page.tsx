@@ -5,8 +5,8 @@ import SearchBar from "@/components/cattle/SearchBar";
 import FilterBar from "@/components/cattle/FilterBar";
 import { Cattle } from "@/entities/Cattle";
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getCattle } from "@/services/cattle";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { deleteCattle, getCattle } from "@/services/cattle";
 
 export default function CattlePage() {
   const [search, setSearch] = useState<string>("");
@@ -18,6 +18,18 @@ export default function CattlePage() {
   const { data: cattle = [], isLoading } = useQuery({
     queryKey: ["cattle"],
     queryFn: getCattle,
+  });
+
+  const queryClient = useQueryClient();
+
+  const deleteMutation = useMutation({
+    mutationFn: deleteCattle,
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["cattle"],
+      });
+    },
   });
 
   const filteredCattle = cattle.filter((c: Cattle) => {
@@ -62,7 +74,10 @@ export default function CattlePage() {
         onReset={handleReset}
       />
 
-      <CattleTable cattle={filteredCattle} />
+      <CattleTable
+        cattle={filteredCattle}
+        onDelete={(id) => deleteMutation.mutate(id)}
+      />
     </>
   );
 }

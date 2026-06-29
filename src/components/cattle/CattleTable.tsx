@@ -11,6 +11,7 @@ import { Cattle } from "@/entities/Cattle";
 
 interface Props {
   cattle: Cattle[];
+  onDelete?: (id: string) => void;
 }
 
 function calculateAge(date: string) {
@@ -28,7 +29,7 @@ function calculateAge(date: string) {
   return `${age > 1 ? `${age} years` : `${age} year`}`;
 }
 
-export default function CattleTable({ cattle }: Props) {
+export default function CattleTable({ cattle, onDelete }: Props) {
   if (!cattle.length) {
     return (
       <div className="rounded-lg border p-10 text-center">
@@ -71,7 +72,11 @@ export default function CattleTable({ cattle }: Props) {
                 Edit
               </Button>
 
-              <Button variant="destructive" size="sm">
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={() => onDelete?.(cow.id)}
+              >
                 Delete
               </Button>
             </TableCell>
