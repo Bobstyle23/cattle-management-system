@@ -1,6 +1,7 @@
+import { Cattle } from "@/entities/Cattle";
 import { CattleFormValues } from "@/entities/CattleFormValues";
 
-export async function getCattle() {
+export async function getCattle(): Promise<Cattle[]> {
   const response = await fetch("/api/cattle");
 
   if (!response.ok) {
@@ -10,7 +11,17 @@ export async function getCattle() {
   return response.json();
 }
 
-export async function createCattle(data: CattleFormValues) {
+export async function getCattleById(id: string): Promise<Cattle> {
+  const response = await fetch(`/api/cattle/${id}`);
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch cattle");
+  }
+
+  return response.json();
+}
+
+export async function createCattle(data: CattleFormValues): Promise<Cattle> {
   const response = await fetch("/api/cattle", {
     method: "POST",
 
