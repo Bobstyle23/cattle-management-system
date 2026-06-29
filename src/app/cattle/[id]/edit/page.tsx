@@ -4,10 +4,11 @@ import CattleForm from "@/components/cattle/CattleForm";
 import { CattleFormValues } from "@/entities/CattleFormValues";
 import { getCattleById, updateCattle } from "@/services/cattle";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 export default function EditPage() {
   const { id } = useParams();
+  const router = useRouter();
 
   const { data, isLoading } = useQuery({
     queryKey: ["cattle", id],
@@ -28,6 +29,7 @@ export default function EditPage() {
       queryClient.invalidateQueries({
         queryKey: ["cattle", id],
       });
+      router.push("/cattle");
     },
   });
 
