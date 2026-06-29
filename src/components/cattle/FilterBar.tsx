@@ -9,6 +9,9 @@ import {
 } from "@/components/ui/select";
 import { Button } from "../ui/button";
 import { CATTLE_BREEDS } from "@/entities/Breed";
+import { genderOptions } from "@/entities/Gender";
+import { statusOptions } from "@/entities/Status";
+import { FieldLabel } from "../ui/field";
 
 interface FilterBarProps {
   breed: string;
@@ -32,12 +35,13 @@ export default function FilterBar({
 }: FilterBarProps) {
   return (
     <div className="mb-6 flex gap-4">
+      <FieldLabel>Breed</FieldLabel>
       <Select value={breed} onValueChange={onBreedChange}>
         <SelectTrigger className="w-45">
           <SelectValue placeholder="Breed" />
         </SelectTrigger>
 
-        <SelectContent>
+        <SelectContent id="breed">
           <SelectItem value="ALL">All</SelectItem>
           {CATTLE_BREEDS.map((breed) => (
             <SelectItem value={breed} key={breed}>
@@ -46,6 +50,7 @@ export default function FilterBar({
           ))}
         </SelectContent>
       </Select>
+      <FieldLabel>Gender</FieldLabel>
 
       <Select value={gender} onValueChange={onGenderChange}>
         <SelectTrigger className="w-45">
@@ -54,11 +59,15 @@ export default function FilterBar({
 
         <SelectContent>
           <SelectItem value="ALL">All</SelectItem>
-          <SelectItem value="MALE">Male</SelectItem>
-          <SelectItem value="FEMALE">Female</SelectItem>
+          {genderOptions.map((gender) => (
+            <SelectItem value={gender.value} key={gender.value}>
+              {gender.label}
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
 
+      <FieldLabel>Status</FieldLabel>
       <Select value={status} onValueChange={onStatusChange}>
         <SelectTrigger className="w-45">
           <SelectValue placeholder="Status" />
@@ -66,11 +75,11 @@ export default function FilterBar({
 
         <SelectContent>
           <SelectItem value="ALL">All</SelectItem>
-          <SelectItem value="HEALTHY">Healthy</SelectItem>
-          <SelectItem value="SICK">Sick</SelectItem>
-          <SelectItem value="PREGNANT">Pregnant</SelectItem>
-          <SelectItem value="SOLD">Sold</SelectItem>
-          <SelectItem value="DECEASED">Deceased</SelectItem>
+          {statusOptions.map((status) => (
+            <SelectItem key={status.value} value={status.value}>
+              {status.label}
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
       <Button
