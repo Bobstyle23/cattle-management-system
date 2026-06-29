@@ -2,6 +2,7 @@
 
 import BreedChart from "@/components/dashboard/BreedChart";
 import ChartCard from "@/components/dashboard/ChartCard";
+import RecentCattleTable from "@/components/dashboard/RecentCattleTable";
 import { StatCard } from "@/components/dashboard/StatCard";
 import StatusChart from "@/components/dashboard/StatusChart";
 import { Button } from "@/components/ui/button";
@@ -48,7 +49,7 @@ export default function DashboardPage() {
         <StatCard title="Sick" value={dashboard.sick} />
       </div>
 
-      <div className="grid gap-6">
+      <div className="grid gap-6 mb-4">
         <ChartCard title="Breed Distribution">
           <BreedChart data={dashboard.breedChart} />
         </ChartCard>
@@ -57,6 +58,7 @@ export default function DashboardPage() {
           <StatusChart data={dashboard.statusChart} />
         </ChartCard>
       </div>
+      <RecentCattleTable cattle={dashboard.recentCattle} />
     </div>
   );
 }

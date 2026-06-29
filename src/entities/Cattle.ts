@@ -8,4 +8,6 @@ export interface Cattle {
   gender: Gender;
   status: Status;
   dateOfBirth: string;
+  createdAt: string;
+  updatedAt: string;
 }

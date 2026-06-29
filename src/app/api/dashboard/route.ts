@@ -43,7 +43,7 @@ export async function GET() {
     },
   });
 
-  const STATUS_COLORS: Record<string, string> = {
+  const STATUS_COLORS = {
     HEALTHY: "#22c55e",
     SICK: "#ef4444",
     PREGNANT: "#f59e0b",
@@ -57,6 +57,13 @@ export async function GET() {
     fill: STATUS_COLORS[item.status],
   }));
 
+  const recentCattle = await prisma.cattle.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+    take: 5,
+  });
+
   return NextResponse.json({
     total,
     healthy,
@@ -67,5 +74,6 @@ export async function GET() {
     breeds,
     breedChart,
     statusChart,
+    recentCattle,
   });
 }
