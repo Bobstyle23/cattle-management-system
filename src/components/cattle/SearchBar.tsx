@@ -10,14 +10,14 @@ interface SearchBarProps {
 
 export default function SearchBar({ value, onSearch }: SearchBarProps) {
   return (
-    <div className="relative mb-6 max-w-sm">
+    <div className="relative mb-6 w-[80%]">
       <Search
         className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
         size={18}
       />
 
       <Input
-        className="pl-10"
+        className="pl-10 bg-white"
         placeholder="Search by tag number or breed..."
         value={value}
         onChange={(e) => onSearch(e.target.value)}

@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Cattle } from "@/entities/Cattle";
+import StatusBadge from "./StatusBadge";
 
 interface Props {
   cattle: Cattle[];
@@ -44,50 +45,54 @@ export default function CattleTable({ cattle, onDelete, onEdit }: Props) {
   }
 
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Tag</TableHead>
-          <TableHead>Breed</TableHead>
-          <TableHead>Gender</TableHead>
-          <TableHead>Age</TableHead>
-          <TableHead>Status</TableHead>
-        </TableRow>
-      </TableHeader>
-
-      <TableBody>
-        {cattle.map((cow) => (
-          <TableRow key={cow.id}>
-            <TableCell>{cow.tagNumber}</TableCell>
-
-            <TableCell>{cow.breed}</TableCell>
-
-            <TableCell>{cow.gender}</TableCell>
-
-            <TableCell>{calculateAge(cow.dateOfBirth)}</TableCell>
-
-            <TableCell>{cow.status}</TableCell>
-
-            <TableCell className="space-x-2 text-right">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => onEdit?.(cow.id)}
-              >
-                Edit
-              </Button>
-
-              <Button
-                variant="destructive"
-                size="sm"
-                onClick={() => onDelete?.(cow.id)}
-              >
-                Delete
-              </Button>
-            </TableCell>
+    <div className="bg-white py-4 px-2 rounded-lg">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Tag</TableHead>
+            <TableHead>Breed</TableHead>
+            <TableHead>Gender</TableHead>
+            <TableHead>Age</TableHead>
+            <TableHead>Status</TableHead>
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableHeader>
+
+        <TableBody>
+          {cattle.map((cow) => (
+            <TableRow key={cow.id}>
+              <TableCell>{cow.tagNumber}</TableCell>
+
+              <TableCell>{cow.breed}</TableCell>
+
+              <TableCell>{cow.gender}</TableCell>
+
+              <TableCell>{calculateAge(cow.dateOfBirth)}</TableCell>
+
+              <TableCell>
+                <StatusBadge status={cow.status} />
+              </TableCell>
+
+              <TableCell className="space-x-2 text-right">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => onEdit?.(cow.id)}
+                >
+                  Edit
+                </Button>
+
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  onClick={() => onDelete?.(cow.id)}
+                >
+                  Delete
+                </Button>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 }

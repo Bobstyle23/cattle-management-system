@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/table";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import StatusBadge from "../cattle/StatusBadge";
 
 interface Props {
   cattle: Cattle[];
@@ -44,10 +45,12 @@ export default function RecentCattleTable({ cattle }: Props) {
 
                 <TableCell>{cow.breed}</TableCell>
 
-                <TableCell>{cow.status}</TableCell>
+                <TableCell>
+                  <StatusBadge status={cow.status} />
+                </TableCell>
 
                 <TableCell>
-                  {new Date(cow.createdAt).toLocaleDateString()}
+                  {new Date(cow?.createdAt).toLocaleDateString()}
                 </TableCell>
               </TableRow>
             ))}

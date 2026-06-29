@@ -55,7 +55,10 @@ export default function CattleForm({ defaultValues, onSubmit }: Props) {
   });
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-8 bg-white py-4 px-4 rounded-lg"
+    >
       <FieldGroup className="grid grid-cols-2 gap-6">
         <Field>
           <FieldLabel htmlFor="tagNumber">Tag Number</FieldLabel>

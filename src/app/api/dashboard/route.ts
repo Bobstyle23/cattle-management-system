@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { STATUS_VARIANTS } from "@/entities/StatusVariants";
 
 export async function GET() {
   const total = await prisma.cattle.count();
@@ -43,18 +44,10 @@ export async function GET() {
     },
   });
 
-  const STATUS_COLORS = {
-    HEALTHY: "#22c55e",
-    SICK: "#ef4444",
-    PREGNANT: "#f59e0b",
-    SOLD: "#6b7280",
-    DECEASED: "#000",
-  } as const;
-
   const statusChart = status.map((item) => ({
     status: item.status,
     value: item._count.status,
-    fill: STATUS_COLORS[item.status],
+    fill: STATUS_VARIANTS[item.status],
   }));
 
   const recentCattle = await prisma.cattle.findMany({

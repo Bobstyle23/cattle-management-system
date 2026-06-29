@@ -34,7 +34,7 @@ export default function FilterBar({
   onReset,
 }: FilterBarProps) {
   return (
-    <div className="mb-6 flex gap-4">
+    <div className="mb-6 flex gap-4 bg-white py-4 px-4 w-[80%] rounded-lg">
       <FieldLabel>Breed</FieldLabel>
       <Select value={breed} onValueChange={onBreedChange}>
         <SelectTrigger className="w-45">
