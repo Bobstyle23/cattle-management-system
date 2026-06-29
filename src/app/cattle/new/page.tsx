@@ -3,9 +3,11 @@
 import CattleForm from "@/components/cattle/CattleForm";
 import { createCattle } from "@/services/cattle";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 export default function AddCattlePage() {
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   const mutation = useMutation({
     mutationFn: createCattle,
@@ -13,6 +15,7 @@ export default function AddCattlePage() {
       queryClient.invalidateQueries({
         queryKey: ["cattle"],
       });
+      router.push("/cattle");
     },
   });
 
