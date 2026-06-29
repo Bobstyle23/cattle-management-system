@@ -37,11 +37,15 @@ export default function EditPage() {
     return <div>Loading...</div>;
   }
 
+  const cattleData = data
+    ? { ...data, dateOfBirth: data.dateOfBirth.split("T")[0] }
+    : undefined;
+
   return (
     <>
       <h2 className="text-2xl font-bold mb-6">Edit Cattle</h2>
       <CattleForm
-        defaultValues={data}
+        defaultValues={cattleData}
         onSubmit={(values) => mutation.mutate(values)}
       />
     </>
