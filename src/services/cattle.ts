@@ -57,3 +57,15 @@ export async function updateCattle(
 
   return response.json();
 }
+
+export async function deleteCattle(id: string): Promise<Cattle> {
+  const response = await fetch(`/api/cattle/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to delete cattle");
+  }
+
+  return response.json();
+}
