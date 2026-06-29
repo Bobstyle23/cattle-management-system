@@ -63,7 +63,7 @@ export default function CattlePage() {
 
   return (
     <>
-      <h2 className="text-2xl font-bold mb-6">Cattle</h2>
+      <h2 className="text-2xl font-bold mb-6">Cattle List</h2>
 
       <SearchBar value={search} onSearch={setSearch} />
 
