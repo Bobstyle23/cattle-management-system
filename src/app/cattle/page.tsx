@@ -6,7 +6,8 @@ import FilterBar from "@/components/cattle/FilterBar";
 import { Cattle } from "@/entities/Cattle";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { deleteCattle, getCattle } from "@/services/cattle";
+import { deleteCattle, getCattle, updateCattle } from "@/services/cattle";
+import { useRouter } from "next/navigation";
 
 export default function CattlePage() {
   const [search, setSearch] = useState<string>("");
@@ -31,6 +32,8 @@ export default function CattlePage() {
       });
     },
   });
+
+  const router = useRouter();
 
   const filteredCattle = cattle.filter((c: Cattle) => {
     const keyword = search.toLowerCase();
@@ -77,6 +80,7 @@ export default function CattlePage() {
       <CattleTable
         cattle={filteredCattle}
         onDelete={(id) => deleteMutation.mutate(id)}
+        onEdit={(id) => router.push(`/cattle/${id}/edit`)}
       />
     </>
   );
