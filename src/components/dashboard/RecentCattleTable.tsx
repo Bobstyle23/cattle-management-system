@@ -50,7 +50,7 @@ export default function RecentCattleTable({ cattle }: Props) {
                 </TableCell>
 
                 <TableCell>
-                  {new Date(cow?.createdAt).toLocaleDateString()}
+                  {new Date(cow.createdAt!).toLocaleDateString()}
                 </TableCell>
               </TableRow>
             ))}
