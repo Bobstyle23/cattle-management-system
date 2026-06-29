@@ -31,6 +31,11 @@ export async function GET() {
     _count: true,
   });
 
+  const breedChart = breeds.map((item) => ({
+    breed: item.breed,
+    count: item._count,
+  }));
+
   return NextResponse.json({
     total,
     healthy,
@@ -39,5 +44,6 @@ export async function GET() {
     pregnant,
     recent,
     breeds,
+    breedChart,
   });
 }

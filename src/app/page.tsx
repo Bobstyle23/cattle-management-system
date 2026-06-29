@@ -1,5 +1,7 @@
 "use client";
 
+import BreedChart from "@/components/dashboard/BreedChart";
+import ChartCard from "@/components/dashboard/ChartCard";
 import { StatCard } from "@/components/dashboard/StatCard";
 import { Button } from "@/components/ui/button";
 import { getDashboard } from "@/services/dashboard";
@@ -20,18 +22,10 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="flex flex-col gap-2">
-      <h2 className="text-2xl font-bold mb-6">Dashboard</h2>
+    <div className="flex flex-col">
+      <h2 className="text-2xl font-bold mb-4">Dashboard</h2>
 
-      <div className="grid grid-cols-5 gap-4 mb-6">
-        <StatCard title="Total Cattle" value={dashboard.total} />
-        <StatCard title="Healthy" value={dashboard.healthy} />
-        <StatCard title="Sold" value={dashboard.sold} />
-        <StatCard title="Pregnant" value={dashboard.pregnant} />
-        <StatCard title="Sick" value={dashboard.sick} />
-      </div>
-
-      <div className="self-end ">
+      <div className="self-end mb-4">
         <Button
           variant="outline"
           className="mr-4"
@@ -44,6 +38,18 @@ export default function DashboardPage() {
           Add new cattle
         </Button>
       </div>
+
+      <div className="grid grid-cols-5 gap-4 mb-4">
+        <StatCard title="Total Cattle" value={dashboard.total} />
+        <StatCard title="Healthy" value={dashboard.healthy} />
+        <StatCard title="Sold" value={dashboard.sold} />
+        <StatCard title="Pregnant" value={dashboard.pregnant} />
+        <StatCard title="Sick" value={dashboard.sick} />
+      </div>
+
+      <ChartCard title="Breed Distribution">
+        <BreedChart data={dashboard.breedChart} />
+      </ChartCard>
     </div>
   );
 }
