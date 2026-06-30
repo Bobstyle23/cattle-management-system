@@ -10,6 +10,13 @@ interface Props {
 }
 
 export default function StatusChart({ data }: Props) {
+  if (!data.length) {
+    return (
+      <div className="flex h-full items-center justify-center text-muted-foreground">
+        No status data available.
+      </div>
+    );
+  }
   return (
     <ResponsiveContainer width="100%" height="100%">
       <PieChart>

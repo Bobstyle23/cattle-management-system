@@ -23,37 +23,43 @@ export default function RecentCattleTable({ cattle }: Props) {
       </CardHeader>
 
       <CardContent>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Tag</TableHead>
+        {!cattle.length ? (
+          <div className="flex h-40 items-center justify-center text-muted-foreground">
+            No cattle have been added yet.
+          </div>
+        ) : (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Tag</TableHead>
 
-              <TableHead>Breed</TableHead>
+                <TableHead>Breed</TableHead>
 
-              <TableHead>Status</TableHead>
+                <TableHead>Status</TableHead>
 
-              <TableHead>Added</TableHead>
-            </TableRow>
-          </TableHeader>
-
-          <TableBody>
-            {cattle.map((cow) => (
-              <TableRow key={cow.id}>
-                <TableCell>{cow.tagNumber}</TableCell>
-
-                <TableCell>{cow.breed}</TableCell>
-
-                <TableCell>
-                  <StatusBadge status={cow.status} />
-                </TableCell>
-
-                <TableCell>
-                  {new Date(cow.createdAt!).toLocaleDateString()}
-                </TableCell>
+                <TableHead>Added</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+
+            <TableBody>
+              {cattle.map((cow) => (
+                <TableRow key={cow.id}>
+                  <TableCell>{cow.tagNumber}</TableCell>
+
+                  <TableCell>{cow.breed}</TableCell>
+
+                  <TableCell>
+                    <StatusBadge status={cow.status} />
+                  </TableCell>
+
+                  <TableCell>
+                    {new Date(cow.createdAt!).toLocaleDateString()}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
       </CardContent>
     </Card>
   );

@@ -20,6 +20,13 @@ interface Props {
 }
 
 export default function BreedChart({ data }: Props) {
+  if (!data.length) {
+    return (
+      <div className="flex h-full items-center justify-center text-muted-foreground">
+        No breed data available.
+      </div>
+    );
+  }
   return (
     <ResponsiveContainer width="100%" height="100%">
       <BarChart data={data}>
