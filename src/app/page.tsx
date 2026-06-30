@@ -42,7 +42,7 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-5 gap-4 mb-4">
-        <StatCard title="Total Cattle" value={dashboard.total} />
+        <StatCard title="Total Cattle" value={dashboard?.total} />
         <StatCard title="Healthy" value={dashboard.healthy} />
         <StatCard title="Sold" value={dashboard.sold} />
         <StatCard title="Pregnant" value={dashboard.pregnant} />
