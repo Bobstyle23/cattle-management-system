@@ -1,11 +1,11 @@
 import { Cattle } from "./Cattle";
 
-interface BreedChart {
+export interface BreedChart {
   breed: string;
   count: number;
 }
 
-interface StatusChart {
+export interface StatusChart {
   status: string;
   value: number;
   fill: string;

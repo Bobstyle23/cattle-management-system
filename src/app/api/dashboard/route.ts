@@ -1,59 +1,51 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { STATUS_VARIANTS } from "@/entities/StatusVariants";
+import { Status } from "@/entities/Status";
 
 export async function GET() {
-  const total = await prisma.cattle.count();
+  const [
+    total,
+    healthy,
+    sick,
+    sold,
+    deceased,
+    pregnant,
+    status,
+    breeds,
+    recentCattle,
+  ] = await Promise.all([
+    prisma.cattle.count(),
+    prisma.cattle.count({ where: { status: "HEALTHY" } }),
+    prisma.cattle.count({ where: { status: "SICK" } }),
+    prisma.cattle.count({ where: { status: "SOLD" } }),
+    prisma.cattle.count({ where: { status: "DECEASED" } }),
+    prisma.cattle.count({ where: { status: "PREGNANT" } }),
+    prisma.cattle.groupBy({
+      by: ["status"],
+      _count: true,
+    }),
+    prisma.cattle.groupBy({ by: ["breed"], _count: true }),
+    prisma.cattle.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+      take: 5,
+    }),
+  ]);
 
-  const healthy = await prisma.cattle.count({
-    where: { status: "HEALTHY" },
-  });
-
-  const sick = await prisma.cattle.count({
-    where: { status: "SICK" },
-  });
-
-  const sold = await prisma.cattle.count({
-    where: { status: "SOLD" },
-  });
-
-  const deceased = await prisma.cattle.count({
-    where: { status: "DECEASED" },
-  });
-
-  const pregnant = await prisma.cattle.count({
-    where: { status: "PREGNANT" },
-  });
-
-  const breeds = await prisma.cattle.groupBy({
-    by: ["breed"],
-    _count: true,
-  });
-
-  const breedChart = breeds.map((item) => ({
+  const breedChart = breeds.map((item: { breed: string; _count: number }) => ({
     breed: item.breed,
     count: item._count,
   }));
 
-  const status = await prisma.cattle.groupBy({
-    by: ["status"],
-    _count: {
-      status: true,
-    },
-  });
-
-  const statusChart = status.map((item) => ({
-    status: item.status,
-    value: item._count.status,
-    fill: STATUS_VARIANTS[item.status],
-  }));
-
-  const recentCattle = await prisma.cattle.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
-    take: 5,
-  });
+  const statusChart = status.map(
+    (item: { status: Status; _count: number }) => ({
+      status: item.status,
+      value: item._count,
+      fill: STATUS_VARIANTS[item.status],
+    }),
+  );
 
   return NextResponse.json({
     total,
@@ -63,6 +55,7 @@ export async function GET() {
     deceased,
     pregnant,
     breeds,
+    status,
     breedChart,
     statusChart,
     recentCattle,
