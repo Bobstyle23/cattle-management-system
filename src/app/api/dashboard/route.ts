@@ -17,14 +17,12 @@ export async function GET() {
     where: { status: "SOLD" },
   });
 
-  const pregnant = await prisma.cattle.count({
-    where: { status: "PREGNANT" },
+  const deceased = await prisma.cattle.count({
+    where: { status: "DECEASED" },
   });
 
-  const recent = await prisma.cattle.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
+  const pregnant = await prisma.cattle.count({
+    where: { status: "PREGNANT" },
   });
 
   const breeds = await prisma.cattle.groupBy({
@@ -62,8 +60,8 @@ export async function GET() {
     healthy,
     sick,
     sold,
+    deceased,
     pregnant,
-    recent,
     breeds,
     breedChart,
     statusChart,

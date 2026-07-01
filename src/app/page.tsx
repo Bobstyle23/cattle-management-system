@@ -23,6 +23,8 @@ export default function DashboardPage() {
     return <div>Loading...</div>;
   }
 
+  if (!dashboard) return;
+
   return (
     <div className="flex flex-col">
       <h2 className="text-2xl font-bold mb-4">Dashboard</h2>
@@ -41,12 +43,13 @@ export default function DashboardPage() {
         </Button>
       </div>
 
-      <div className="grid grid-cols-5 gap-4 mb-4">
-        <StatCard title="Total Cattle" value={dashboard?.total} />
+      <div className="grid grid-cols-6 gap-4 mb-4">
+        <StatCard title="Total Cattle" value={dashboard.total} />
         <StatCard title="Healthy" value={dashboard.healthy} />
         <StatCard title="Sold" value={dashboard.sold} />
         <StatCard title="Pregnant" value={dashboard.pregnant} />
         <StatCard title="Sick" value={dashboard.sick} />
+        <StatCard title="Deceased" value={dashboard.deceased} />
       </div>
 
       <div className="grid gap-6 mb-4">
